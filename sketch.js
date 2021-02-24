@@ -24,22 +24,42 @@ function setup() {
 	helicopterSprite.addImage(helicopterIMG)
 	helicopterSprite.scale=0.6
 
-	groundSprite=createSprite(width/2, height-15, width,10);
+	groundSprite=createSprite(width/2, height-35, width,10);
 	groundSprite.shapeColor=color(255)
 
 
 	engine = Engine.create();
 	world = engine.world;
-	side1= new Ground(500,670,200,20);
-	side2= new Ground(400,620,20,100);
-	side3= new Ground(600,620,20,100);
-	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.3, isStatic:true});
+
+	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.4, isStatic:true});
 	World.add(world, packageBody);
 	
 
 	//Create a Ground
 	ground = Bodies.rectangle(width/2, 650, width, 10 , {isStatic:true} );
  	World.add(world, ground);
+
+ 	boxPosition=width/2-100
+ 	boxY=610;
+
+
+ 	boxleftSprite=createSprite(boxPosition, boxY, 20,100);
+ 	boxleftSprite.shapeColor=color(255,0,0);
+
+ 	boxLeftBody = Bodies.rectangle(boxPosition+20, boxY, 20,100 , {isStatic:true} );
+ 	World.add(world, boxLeftBody);
+
+ 	boxBase=createSprite(boxPosition+100, boxY+40, 200,20);
+ 	boxBase.shapeColor=color(255,0,0);
+
+ 	boxBottomBody = Bodies.rectangle(boxPosition+100, boxY+45-20, 200,20 , {isStatic:true} );
+ 	World.add(world, boxBottomBody);
+
+ 	boxleftSprite=createSprite(boxPosition+200 , boxY, 20,100);
+ 	boxleftSprite.shapeColor=color(255,0,0);
+
+ 	boxRightBody = Bodies.rectangle(boxPosition+200-20 , boxY, 20,100 , {isStatic:true} );
+ 	World.add(world, boxRightBody);
 
 
 	Engine.run(engine);
@@ -50,15 +70,15 @@ function setup() {
 function draw() {
   rectMode(CENTER);
   background(0);
+ 
   packageSprite.x= packageBody.position.x 
   packageSprite.y= packageBody.position.y 
+
   drawSprites();
-  side1.display();
-  side2.display();
-  side3.display();
+  
+  
  
 }
-
 function keyPressed() {
 	if (keyCode === RIGHT_ARROW) {
 		helicopterSprite.x+=20;
@@ -70,10 +90,6 @@ function keyPressed() {
 	}
 
  if (keyCode === DOWN_ARROW) {
-    // Look at the hints in the document and understand how to make the package body fall only on
     Matter.Body.setStatic(packageBody,false);
   }
 }
-
-
-
